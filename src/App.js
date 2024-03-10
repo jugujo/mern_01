@@ -15,9 +15,9 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React -KJH
+          Learn React -KJH PR연습
       </a>
-      </header>
+      </header> 빌려서
     </div>
   );
 }
