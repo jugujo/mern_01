@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React -KJH
+          feat/kjh2로 수정한 KJH
       </a>
       </header>
     </div>
