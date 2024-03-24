@@ -3,23 +3,31 @@ import React from 'react'
 
 import { Header } from './Header'
 import './page.css'
+import { Button } from './Button'
 
 type User = {
     name: string
+    email?: string
+    password?: string
 }
 
 export const Page: React.FC = () => {
     const [user, setUser] = React.useState<User>()
+    const [isShow, setIsShow] = React.useState(false)
+    const getUser = () => {
+        setUser({ name: 'KIM JOOHWAN' })
+        setIsShow(true)
+    }
 
     return (
         <article>
             <Header
                 user={user}
-                onLogin={() => setUser({ name: 'Jane Doe' })}
+                onLogin={() => setUser({ name: 'get github userID' })}
                 onLogout={() => setUser(undefined)}
-                onCreateAccount={() => setUser({ name: 'Jane Doe' })}
+                onCreateAccount={() => setUser({ name: 'get github userName' })}
             />
-
+            {/* 
             <section className="storybook-page">
                 <h2>Pages in Storybook</h2>
                 <p>
@@ -89,6 +97,13 @@ export const Page: React.FC = () => {
                     </svg>
                     Viewports addon in the toolbar
                 </div>
+            </section> */}
+            <section className="storybook-page">
+                <Button onClick={getUser} label="Hello World" />
+            </section>
+
+            <section className="storybook-page">
+                {isShow && <p>User:{user?.name}</p>}
             </section>
         </article>
     )

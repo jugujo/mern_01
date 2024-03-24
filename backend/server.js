@@ -68,9 +68,9 @@ app.get("/", function (req, res) {
   res.send({ message: "Hello world!" });
 });
 
-app.get("/main", function (req, res) {
-  res.sendFile(__dirname + "/public/main.html");
-});
+// app.get("/main", function (req, res) {
+//   res.sendFile(__dirname + "/public/main.html");
+// });
 
 app.get("/test", function (req, res) {
   res.send(

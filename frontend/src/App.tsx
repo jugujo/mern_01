@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import { Page } from './stories/Page'
+import { Button } from './stories/Button'
 
 const App = () => {
     /**
@@ -15,11 +17,16 @@ const App = () => {
     api()
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-            </header>
-        </div>
+        <>
+            {/* <div className="App">
+                <header className="App-header">
+                    <p>MERN Project v0.0.1</p>
+                </header>
+            </div> */}
+            <div>
+                <Page />
+            </div>
+        </>
     )
 }
 
