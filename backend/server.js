@@ -38,7 +38,7 @@ const connectDB = require("./config/db");
 const dotenv = require("dotenv");
 // const axios = require("axios");
 const cors = require("cors");
-const port = 5001;
+const PORT = process.env.PORT || 5000;
 
 // app.listen(port, () => console.log("running"));
 // express 는 함수이므로, 반환값을 변수에 저장한다.
@@ -48,23 +48,21 @@ dotenv.config(); // .env 파일을 사용(패키지 설치 필요)
 
 // app.use(express.urlencoded({ extended: true })); // urlencoded 형식으로 파라미터를 전달한다.
 
-<<<<<<< HEAD
-app.use(express.json({
-    extended: false
-}))
+app.use(
+  express.json({
+    extended: false,
+  })
+);
 
-app.use('/api/user', require('./routes/api/user'));
-app.use('/api/auth', require('./routes/api/auth'));
+app.use("/api/user", require("./routes/api/user"));
+app.use("/api/auth", require("./routes/api/auth"));
 
-const PORT = process.env.PORT || 5000;
-=======
 // node.js에서 json 파일을 사용할때 필요(필수는 아닌듯)
 app.use(
   express.json({
     extended: false,
   })
 );
->>>>>>> remotes/origin/feat/axios-backend
 
 app.use(cors()); // 모든 도메인에서의 요청을 허용
 // 5001 포트로 서버 오픈
