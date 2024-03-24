@@ -1,36 +1,3 @@
-/** CommonJSの場合 */
-// const express = require("express");
-// const connectDB = require("./config/db");
-// const dotenv = require("dotenv");
-/** ES6の場合 */
-// import express from "express";
-// import connectDB from "./config/db.js";
-// import dotenv from "dotenv";
-
-// // const User = require('./model/User')
-
-// // let name = 'a';
-// // let email = 'a';
-// // let passworf = 'a';
-
-// // let user = new User({
-// //     name,
-// //     email,
-// //     passworf
-// // })
-
-// // Call start
-// // (async() => {
-// //     console.log('before start');
-
-// //     // let user = await User.findOne({ 'aa'})
-// //     // user.name = 'name'
-
-// //     await user.save();
-
-// //     console.log('after start');
-// //   })();
-
 // node_modules 에 있는 express 관련 파일을 가져온다.
 const express = require("express");
 
@@ -76,10 +43,6 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.get("/", function (req, res) {
   res.send({ message: "Hello world!" });
 });
-
-// app.get("/main", function (req, res) {
-//   res.sendFile(__dirname + "/public/main.html");
-// });
 
 app.get("/test", function (req, res) {
   res.send(
