@@ -48,12 +48,16 @@ dotenv.config(); // .env 파일을 사용(패키지 설치 필요)
 
 // app.use(express.urlencoded({ extended: true })); // urlencoded 형식으로 파라미터를 전달한다.
 
-// node.js에서 json 파일을 사용할때 필요(필수는 아닌듯)
 app.use(
   express.json({
     extended: false,
   })
 );
+
+app.use("/api/user", require("./routes/api/user"));
+app.use("/api/auth", require("./routes/api/auth"));
+
+const PORT = process.env.PORT || 5000;
 
 app.use(cors()); // 모든 도메인에서의 요청을 허용
 // 5001 포트로 서버 오픈
