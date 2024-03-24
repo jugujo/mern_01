@@ -1,14 +1,11 @@
-// const express = require('express')
-// const connectDB = require('./config/db');
-
-// const app = express()
-// connectDB();
-
-// app.get('/', (req, res) => res.send('respooo'));
-
-// const PORT = process.env.PORT || 5000;
-
-// app.listen(PORT, () => console.log(`Server start on ${PORT}`));
+/** CommonJSの場合 */
+// const express = require("express");
+// const connectDB = require("./config/db");
+// const dotenv = require("dotenv");
+/** ES6の場合 */
+// import express from "express";
+// import connectDB from "./config/db.js";
+// import dotenv from "dotenv";
 
 // // const User = require('./model/User')
 
@@ -36,19 +33,36 @@
 
 // node_modules 에 있는 express 관련 파일을 가져온다.
 const express = require("express");
+
+const connectDB = require("./config/db");
+const dotenv = require("dotenv");
 // const axios = require("axios");
 const cors = require("cors");
 const port = 5001;
 
 // app.listen(port, () => console.log("running"));
 // express 는 함수이므로, 반환값을 변수에 저장한다.
-var app = express();
+const app = express();
+connectDB();
+dotenv.config(); // .env 파일을 사용(패키지 설치 필요)
+
+// app.use(express.urlencoded({ extended: true })); // urlencoded 형식으로 파라미터를 전달한다.
+
+// node.js에서 json 파일을 사용할때 필요(필수는 아닌듯)
+app.use(
+  express.json({
+    extended: false,
+  })
+);
 
 app.use(cors()); // 모든 도메인에서의 요청을 허용
 // 5001 포트로 서버 오픈
-app.listen(5001, function () {
+app.listen(5001, () => {
   console.log("start! express server on port 5001");
 });
+
+app.use("/api/user", require("./routes/api/user"));
+app.use("/api/auth", require("./routes/api/auth"));
 
 app.get("/", function (req, res) {
   res.send({ message: "Hello world!" });
