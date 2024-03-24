@@ -8,9 +8,9 @@ router.get('/', async (req, res) => {
 
     const User = require('../../model/User')
 
-    let name = 'a';
-    let email = 'a';
-    let passworf = 'a';
+    let name = 'b';
+    let email = 'b';
+    let passworf = 'b';
 
     let user = new User({
         name,
@@ -18,9 +18,13 @@ router.get('/', async (req, res) => {
         passworf
     })
 
-    await user.save();
+    let user2 = await User.findOne(
+        { name: 'a'})
 
-    console.log(user.name);
+
+    // await user.save();
+
+    console.log(user2);
 
 });
 
