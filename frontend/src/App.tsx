@@ -1,32 +1,22 @@
 import React, { useEffect } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import { Page } from './stories/Page'
+import { Page } from './components/Page'
 import { Button } from './stories/Button'
 
-const App = () => {
-    /**
-     * example express <-> react
-     * */
-    const url = 'http://localhost:5001/'
-    const api = async () => {
-        const response = await fetch(url)
-        const jsonData = await response.json()
-        console.log('#jsonData = ', jsonData)
-    }
-    api()
+// User 타입 정의
+type User = {
+    _id: string
+    name: string
+    email: string
+    // 필요한 다른 필드들...
+}
 
+const App = () => {
     return (
-        <>
-            {/* <div className="App">
-                <header className="App-header">
-                    <p>MERN Project v0.0.1</p>
-                </header>
-            </div> */}
-            <div>
-                <Page />
-            </div>
-        </>
+        <div>
+            <Page />
+        </div>
     )
 }
 
