@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button } from './Button'
+import { Button } from '../../stories/Button'
 import './header.css'
 
 type User = {
@@ -44,7 +44,7 @@ export const Header = ({
                         />
                     </g>
                 </svg>
-                <h1>Acme</h1>
+                <h1>MERN Project</h1>
             </div>
             <div>
                 {user ? (
