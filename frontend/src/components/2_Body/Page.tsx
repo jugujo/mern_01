@@ -1,43 +1,55 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react'
-
 import { Header } from '../1_Headers/Header'
-import { Button } from '../../stories/Button'
 import MongoDB from './Page/MongoDB'
+import { Button } from '../../stories/Button'
+import Footer from '../9_Footers/Footer'
 
 type User = {
     name: string
-    email?: string
-    password?: string
 }
 
 export const Page: React.FC = () => {
+    const [user, setUser] = React.useState<User>()
+    const [isShow, setIsShow] = React.useState(false)
+
+    const toggle = () => setIsShow(!isShow)
+
+    const onLogin = () => {
+        setUser({
+            name: 'API responseから取得したusers.nameを表示',
+        })
+    }
+    const onLogout = () => {
+        setUser(undefined)
+        setIsShow(false)
+    }
+    const onCreateAccount = () => {
+        // openCreateAccountPage
+        alert('会員登録画面')
+    }
     return (
         <>
-            <article>
+            <section>
                 <Header
                     user={user}
-                    onLogin={() => setUser({ name: 'TODO: get github userID' })}
-                    onLogout={() => setUser(undefined)}
-                    onCreateAccount={() =>
-                        setUser({ name: 'get github userName' })
-                    }
+                    onLogin={() => onLogin()}
+                    onLogout={() => onLogout()}
+                    onCreateAccount={() => onCreateAccount()}
                 />
+            </section>
+            {user && (
                 <section className="storybook-page">
-                    <Button
-                        onClick={toggleMongoDB}
-                        label="MongoDBのusersリスト"
-                    />
+                    <h2>MongoDB users collection</h2>
+                    <section className="storybook-page">
+                        <Button label={'Get Users'} onClick={toggle} />
+                    </section>
+                    <div className="tip-wrapper">{isShow && <MongoDB />}</div>
                 </section>
-            </article>
-            <div className="storybook-page">
-                {isShow && (
-                    <div>
-                        {/* この部分だけpage stateによって該当するcomponentを呼び出し<MongoDB /> */}
-                        <MongoDB />
-                    </div>
-                )}
-            </div>
+            )}
+            <section>
+                <Footer />
+            </section>
         </>
     )
 }
