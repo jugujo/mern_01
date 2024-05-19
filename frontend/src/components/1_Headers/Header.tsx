@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Button } from './Button'
 import './header.css'
+import { Button } from '../../stories/Button'
 
 type User = {
     name: string
@@ -44,7 +44,7 @@ export const Header = ({
                         />
                     </g>
                 </svg>
-                <h1>Acme</h1>
+                <h1>MERN Project</h1>
             </div>
             <div>
                 {user ? (
