@@ -2,6 +2,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { TodoType } from '../../types/todos/TodoTypes'
 import { Types } from 'mongoose'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import React from 'react'
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+    function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+    }
+)
 
 export const useTodoHooks = () => {
     const [todos, setTodos] = useState<TodoType[]>([])
@@ -11,9 +19,23 @@ export const useTodoHooks = () => {
     const [error, setError] = useState<string | null>(null)
     const [selectAll, setSelectAll] = useState(false)
 
+    const [openAlert, setOpenAlert] = useState(false)
+
     useEffect(() => {
         fetchTodos()
     }, [])
+
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpenAlert(false)
+    }
+
+    const showError = (message: string) => {
+        setError(message)
+        setOpenAlert(true)
+    }
 
     const fetchTodos = async () => {
         try {
@@ -187,5 +209,8 @@ export const useTodoHooks = () => {
         onToggleSelectAll,
         selectAll,
         error,
+        openAlert,
+        handleClose,
+        showError,
     }
 }
