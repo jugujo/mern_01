@@ -2,14 +2,8 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { TodoType } from '../../types/todos/TodoTypes'
 import { Types } from 'mongoose'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import React from 'react'
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-    function Alert(props, ref) {
-        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-    }
-)
+import { AlertColor } from '@mui/material'
 
 export const useTodoHooks = () => {
     const [todos, setTodos] = useState<TodoType[]>([])
@@ -19,20 +13,30 @@ export const useTodoHooks = () => {
     const [error, setError] = useState<string | null>(null)
     const [selectAll, setSelectAll] = useState(false)
 
+    const [severity, setSeverity] = useState<AlertColor | undefined>('error')
     const [openAlert, setOpenAlert] = useState(false)
 
     useEffect(() => {
         fetchTodos()
     }, [])
 
-    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    const setInitialState = () => {
+        setUsername('')
+        setTitle('Programming')
+        setContents('')
+    }
+    const handleClose = (
+        event?: React.SyntheticEvent<any, Event> | Event,
+        reason?: string
+    ) => {
         if (reason === 'clickaway') {
             return
         }
         setOpenAlert(false)
     }
 
-    const showError = (message: string) => {
+    const showError = (severity: string, message: string) => {
+        setSeverity(severity as AlertColor)
         setError(message)
         setOpenAlert(true)
     }
@@ -77,7 +81,7 @@ export const useTodoHooks = () => {
             const todo = todos.find((todo) => todo._id === row._id)
 
             if (!todo) {
-                setError('Todo not found for update.')
+                showError('error', 'Todo not found for update.')
                 return
             }
 
@@ -86,7 +90,7 @@ export const useTodoHooks = () => {
                     todo[key as keyof TodoType] !== row[key as keyof TodoType]
             )
             if (!hasChanges) {
-                setError('No changes detected.')
+                showError('error', 'No changes detected.')
                 return
             }
 
@@ -94,24 +98,21 @@ export const useTodoHooks = () => {
                 ...todo,
                 time: new Date(),
             }
-            console.log('UPDATE newTodo:', newTodo)
             await axios.put(
                 `http://localhost:5001/api/todos/${row._id}`,
                 newTodo
             )
 
-            console.log('OK UPDATE')
             fetchTodos()
-            setError(null)
+            showError('success', 'OK UPDATE')
         } catch (error) {
-            console.error('Error updating user:', error)
-            setError('Error updating todo.')
+            showError('error', 'Error updating todo.')
         }
     }
 
     const onInsertHandle = async () => {
         if (checkoutInsert()) {
-            setError('Please fill in all fields.')
+            showError('error', 'Please fill in all fields.')
             return
         }
 
@@ -123,7 +124,8 @@ export const useTodoHooks = () => {
         )
 
         if (existingTodo) {
-            setError(
+            showError(
+                'error',
                 'Todo with the same username, title, and content already exists.'
             )
             return
@@ -137,18 +139,16 @@ export const useTodoHooks = () => {
             completed: false,
             time: new Date(),
         }
-        console.log('onInsertHandle:', newTodo)
         const response = await axios.post<TodoType>(
             'http://localhost:5001/api/todos',
             newTodo
         )
-        console.log('response.status:', response.status)
         if (response.status === 200 || response.status === 201) {
             fetchTodos()
-            setError(null)
+            showError('success', 'Insert completed')
+            setInitialState()
         } else {
-            console.log('ERROR: Response')
-            setError('Error inserting todo.')
+            showError('error', 'Error inserting todo.')
         }
     }
 
@@ -209,8 +209,8 @@ export const useTodoHooks = () => {
         onToggleSelectAll,
         selectAll,
         error,
+        severity,
         openAlert,
         handleClose,
-        showError,
     }
 }

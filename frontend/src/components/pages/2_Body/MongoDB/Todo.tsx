@@ -2,6 +2,7 @@ import React from 'react'
 import TodoTable from './TodoTable'
 import TodoHeader from './TodoHeader'
 import { useTodoHooks } from '../../../../hooks/todos/TodoHooks'
+import { Alert, Snackbar } from '@mui/material'
 
 const Todo: React.FC = () => {
     const {
@@ -20,12 +21,27 @@ const Todo: React.FC = () => {
         onToggleSelectAll,
         selectAll,
         error,
+        severity,
+        openAlert,
+        handleClose,
     } = useTodoHooks()
 
     return (
         <div>
             <h1>Todos</h1>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            <Snackbar
+                open={openAlert}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity={severity}
+                    sx={{ width: '100%' }}
+                >
+                    {error}
+                </Alert>
+            </Snackbar>
             <TodoHeader
                 username={username}
                 setUsername={setUsername}
